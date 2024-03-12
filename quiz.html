@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+  <style>
+    #clock{
+      font-size: 5rem;
+      font-weight: 1000;
+      padding: auto;
+      border-radius: 15px;
+      border: 2px solid rgb(63, 58, 187);
+      color: rgb(13, 13, 13);
+      text-align: center;
+      background-color:#007bff;
+      border: 10px solid white;
+      border-radius: 100em;
+    }
+    .pro{
+      text-align: center;
+     }
+  </style>
+  <h2 class="pro">project 1</h2>
+  <div id="clock"></div>
+   <script>
+    function updateClock() {
+      var now = new Date();
+      var hours = now.getHours();
+      var minutes = now.getMinutes();
+      var seconds = now.getSeconds();
+  
+      hours = hours < 10 ? "0" + hours : hours;
+      minutes = minutes < 10 ? "0" + minutes : minutes;
+      seconds = seconds < 10 ? "0" + seconds : seconds;
+  
+      var timeString = hours + ":" + minutes + ":" + seconds;
+      document.getElementById("clock").innerHTML = timeString;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+  
+  
+   </script>
+
+  <title>Interactive Quiz</title>
+  <h2 class="p">project 2</h2>
+  <style>
+    .p{
+        text-align: center;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: skyblue;
+    }
+    .quiz-container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #0c0c0c;
+      border-radius: 10px;
+    }
+    .question {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+    .options {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    .option {
+      padding: 10px;
+      border: 1px solid #000000;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .option:hover {
+      background-color: #f0f0f0;
+    }
+    .btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      border: 5px solid white;
+      border-radius: 50px;
+      cursor: pointer;
+    }
+    .result {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+    h2{
+        color: rgb(12, 3, 109);
+    }
+  </style>
+</head>
+<body>
+
+<div class="quiz-container">
+  <h2>Interactive Quiz</h2>
+  <div class="question" id="question"></div>
+  <div class="options" id="options"></div>
+  <button class="btn" id="checkButton" onclick="checkAnswer()" disabled>Check Answer</button>
+  <button class="btn" id="nextButton" onclick="nextQuestion()">Next Question</button>
+  <!-- <button class="btn" id="prevButton" onclick="prevQuestion()">Previous Question</button> -->
+  <div class="result" id="result"></div>
+</div>
+
+<script>
+  const quizData = [
+    {
+      question: "What is the capital of France?",
+      options: ["Paris", "London", "Berlin", "Rome"],
+      correctAnswer: "Paris"
+    },
+    {
+      question: "Which planet is known as the Red Planet?",
+      options: ["Jupiter", "Mars", "Venus", "Saturn"],
+      correctAnswer: "Mars"
+    },
+    {
+      question: "Who wrote the Harry Potter series?",
+      options: ["J.K. Rowling", "Stephenie Meyer", "George R.R. Martin", "J.R.R. Tolkien"],
+      correctAnswer: "J.K. Rowling"
+    },
+    {
+      question: "What is the chemical symbol for water?",
+      options: ["H2O", "CO2", "NaCl", "CH4"],
+      correctAnswer: "H2O"
+    },
+    {
+      question: "Which is the largest ocean on Earth?",
+      options: ["Atlantic Ocean", "Indian Ocean", "Arctic Ocean", "Pacific Ocean"],
+      correctAnswer: "Pacific Ocean"
+    },
+    {
+      question: "Who discovered gravity?",
+      options: ["Isaac Newton", "Albert Einstein", "Galileo Galilei", "Stephen Hawking"],
+      correctAnswer: "Isaac Newton"
+    },
+    {
+      question: "What is the tallest mountain in the world?",
+      options: ["Mount Everest", "K2", "Kangchenjunga", "Lhotse"],
+      correctAnswer: "Mount Everest"
+    },
+    {
+      question: "What is the largest mammal in the world?",
+      options: ["Blue Whale", "African Elephant", "Giraffe", "Hippopotamus"],
+      correctAnswer: "Blue Whale"
+    },
+    {
+      question: "Who painted the Mona Lisa?",
+      options: ["Leonardo da Vinci", "Pablo Picasso", "Vincent van Gogh", "Michelangelo"],
+      correctAnswer: "Leonardo da Vinci"
+    },
+    {
+      question: "What is the chemical symbol for gold?",
+      options: ["Au", "Ag", "Fe", "Cu"],
+      correctAnswer: "Au"
+    }
+  ];
+
+  const questionElement = document.getElementById('question');
+  const optionsElement = document.getElementById('options');
+  const resultElement = document.getElementById('result');
+  const checkButton = document.getElementById('checkButton');
+  const nextButton = document.getElementById('nextButton');
+  let currentQuestion = 0;
+  let score = 0;
+
+  function loadQuestion() {
+    const currentQuizData = quizData[currentQuestion];
+    questionElement.textContent = currentQuizData.question;
+    optionsElement.innerHTML = "";
+    currentQuizData.options.forEach(option => {
+      const optionElement = document.createElement('div');
+      optionElement.textContent = option;
+      optionElement.classList.add('option');
+      optionElement.onclick = function() {
+        selectOption(option, currentQuizData.correctAnswer);
+      };
+      optionsElement.appendChild(optionElement);
+    });
+  }
+
+  function selectOption(selectedOption, correctAnswer) {
+    checkButton.disabled = false; // Enable the "Check Answer" button when an option is selected
+    if (selectedOption === correctAnswer) {
+      score++;
+    }
+    const options = document.querySelectorAll('.option');
+    options.forEach(option => {
+      option.style.pointerEvents = 'none'; // Disable selecting other options
+      if (option.textContent === correctAnswer) {
+        option.style.backgroundColor = 'green'; // Highlight correct answer
+      } else {
+        option.style.backgroundColor = 'red'; // Highlight incorrect answer
+      }
+    });
+  }
+
+  function checkAnswer() {
+    const currentQuizData = quizData[currentQuestion];
+    const options = document.querySelectorAll('.option');
+    options.forEach(option => {
+      option.style.pointerEvents = 'none'; // Disable selecting other options
+      if (option.textContent === currentQuizData.correctAnswer) {
+        option.style.backgroundColor = 'green'; // Highlight correct answer
+      } else {
+        option.style.backgroundColor = 'red'; // Highlight incorrect answer
+      }
+    });
+
+    // Show the result only if it's the last question
+    if (currentQuestion === quizData.length - 1) {
+      showResult();
+    }
+  }
+
+  function nextQuestion() {
+    if (currentQuestion < quizData.length - 1) {
+      currentQuestion++;
+      loadQuestion();
+      resultElement.textContent = ""; // Clear the result display
+      checkButton.disabled = true; // Disable "Check Answer" button when moving to the next question
+    }
+  }
+
+  /* function prevQuestion() {
+    if (currentQuestion > 0) {
+      currentQuestion--;
+      loadQuestion();
+      resultElement.textContent = ""; // Clear the result display
+    }
+  } */
+
+  function showResult() {
+    resultElement.textContent = `Your Score: ${score} out of ${quizData.length}`;
+  }
+
+  loadQuestion();
+</script>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Text to Speech Converter</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+    .container {
+        max-width: 600px;
+        margin: 50px auto;
+        text-align: center;
+    }
+    textarea {
+        width: 100%;
+        height: 200px;
+        margin-bottom: 20px;
+        padding: 10px;
+    }
+    button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #0c0c0c;
+        border: 100px;
+        border-radius: 5px;
+        cursor: pointer;
+        border: 2px solid white;
+        border-radius: 10px;
+    }
+    button:hover {
+        background-color: #0056b3;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>project 3</h2>
+    <h1>Text to Speech Converter</h1>
+    <textarea id="textToSpeak" placeholder="Enter text here..."></textarea>
+    <select id="languageSelect">
+        <option value="en">English</option>
+        <option value="es">Spanish</option>
+        <option value="ar">Arabic</option>
+        <!-- Add more language options as needed -->
+    </select>
+    <button onclick="speak()">Speak</button>
+</div>
+
+<script>
+    function speak() {
+        var text = document.getElementById("textToSpeak").value;
+        var language = document.getElementById("languageSelect").value;
+        var speechSynthesis = window.speechSynthesis;
+        var speech = new SpeechSynthesisUtterance();
+        speech.text = text;
+        speech.lang = language;
+        if (language === 'ar') {
+            speech.rate = 0.9; // Adjust speech rate
+            speech.pitch = 1.0; // Adjust speech pitch
+        }
+        speechSynthesis.speak(speech);
+    }
+</script>
+  </body>
+</html>
