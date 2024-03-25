@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,24 +30,18 @@
       var hours = now.getHours();
       var minutes = now.getMinutes();
       var seconds = now.getSeconds();
-      var meridiem = "AM";
-    
-      if (hours >= 12) {
-        meridiem = "PM";
-        hours = hours % 12;
-      }
-    
-      hours = hours === 0 ? 12 : hours;
+  
       hours = hours < 10 ? "0" + hours : hours;
       minutes = minutes < 10 ? "0" + minutes : minutes;
       seconds = seconds < 10 ? "0" + seconds : seconds;
-    
-      var timeString = hours + ":" + minutes + ":" + seconds + " " + meridiem;
+  
+      var timeString = hours + ":" + minutes + ":" + seconds;
       document.getElementById("clock").innerHTML = timeString;
     }
-    
     setInterval(updateClock, 1000);
     updateClock();
+  
+  
    </script>
 
   <title>Interactive Quiz</title>
@@ -98,7 +93,7 @@
       font-weight: bold;
     }
     h2{
-        color: rgb(9, 3, 81);
+        color: rgb(12, 3, 109);
     }
   </style>
 </head>
